@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIL Physics & English - A2 Level</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .teacher-note {
+            background: #fef3c7;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .activity-card h2 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-card .subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* Activity 1: States of Matter */
+        .matter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .matter-item {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .matter-item .emoji {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .matter-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .matter-btn {
+            padding: 6px 12px;
+            border: 2px solid #cbd5e1;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .matter-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .matter-btn.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .matter-btn.incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        /* Activity 2: Forces */
+        .force-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .force-question p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .option-btn.selected-correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .option-btn.selected-incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .option-btn.show-correct {
+            border-color: var(--success);
+            color: var(--success);
+            background: #d1fae5;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* Activity 3: Fill in the blanks */
+        .reading-text {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            line-height: 2;
+            margin-bottom: 15px;
+        }
+
+        .blank-select {
+            padding: 4px 8px;
+            font-size: 1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .blank-select.correct {
+            border-color: var(--success);
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .blank-select.incorrect {
+            border-color: var(--danger);
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #e0e7ff;
+            border-radius: 8px;
+        }
+
+        .word-bank span {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #3730a3;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons & Score */
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        .action-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .action-btn.secondary {
+            background: var(--text-light);
+        }
+
+        .action-btn.secondary:hover {
+            background: #475569;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .score-board h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .score-board p {
+            font-size: 1.2rem;
+        }
+
+        .feedback-msg {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-height: 20px;
+        }
+        
+        .feedback-msg.good { color: var(--success); }
+        .feedback-msg.bad { color: var(--danger); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .matter-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🔬 Physics & English 🇬🇧</h1>
+        <p>Interactive CLIL Lesson | Level: A2 (Pre-Intermediate)</p>
+    </header>
+
+    <div class="teacher-note">
+        <strong>👨‍🏫 Teacher's Note (CLIL Approach):</strong><br>
+        <strong>Content Objective:</strong> Understand states of matter (solid, liquid, gas) and basic forces (push, pull, gravity, friction).<br>
+        <strong>Language Objective:</strong> Use present simple tense, categorize vocabulary, and understand short scientific descriptions.
+    </div>
+
+    <!-- ACTIVITY 1: STATES OF MATTER -->
+    <div class="activity-card">
+        <h2>🧊 Activity 1: States of Matter</h2>
+        <p class="subtitle">Look at the pictures. Is it a Solid, a Liquid, or a Gas? Click the correct button.</p>
+        
+        <div class="matter-grid" id="matterGrid">
+            <!-- Items generated by JS -->
+        </div>
+        <div class="feedback-msg" id="matterFeedback"></div>
+    </div>
+
+    <!-- ACTIVITY 2: FORCES -->
+    <div class="activity-card">
+        <h2>🏃‍♂️ Activity 2: Forces in Action</h2>
+        <p class="subtitle">Read the sentences. What force is happening? Choose the correct answer.</p>
+        
+        <div id="forcesContainer">
+            <!-- Questions generated by JS -->
+        </div>
+        <div class="feedback-msg" id="forcesFeedback"></div>
+    </div>
+
+    <!-- ACTIVITY 3: READING & VOCABULARY -->
+    <div class="activity-card">
+        <h2>📖 Activity 3: Reading - Gravity</h2>
+        <p class="subtitle">Read the text. Choose the correct word from the box to complete the sentences.</p>
+        
+        <div class="word-bank">
+            <span>pull</span> <span>Earth</span> <span>heavy</span> <span>light</span> <span>makes</span>
+        </div>
+
+        <div class="reading-text">
+            Gravity is an invisible force. It 
+            <select class="blank-select" id="blank1" onchange="checkBlank(1)">
+                <option value="">-- choose --</option>
+                <option value="pull">pull</option>
+                <option value="Earth">Earth</option>
+                <option value="heavy">heavy</option>
+                <option value="light">light</option>
+                <option value="makes">makes</option>
+            </select> 
+            objects down to the ground. 
+            The 
+            <select class="blank-select" id="blank2" onchange="checkBlank(2)">
+                <option value="">-- choose --</option>
+                <option value="pull">pull</option>
+                <option value="Earth">Earth</option>
+                <option value="heavy">heavy</option>
+                <option value="light">light</option>
+                <option value="makes">makes</option>
+            </select> 
+            has very strong gravity. 
+            A rock is 
+            <select class="blank-select" id="blank3" onchange="checkBlank(3)">
+                <option value="">-- choose --</option>
+                <option value="pull">pull</option>
+                <option value="Earth">Earth</option>
+                <option value="heavy">heavy</option>
+                <option value="light">light</option>
+                <option value="makes">makes</option>
+            </select>, 
+            so it falls fast. A feather is 
+            <select class="blank-select" id="blank4" onchange="checkBlank(4)">
+                <option value="">-- choose --</option>
+                <option value="pull">pull</option>
+                <option value="Earth">Earth</option>
+                <option value="heavy">heavy</option>
+                <option value="light">light</option>
+                <option value="makes">makes</option>
+            </select>, 
+            so it falls slowly. Gravity 
+            <select class="blank-select" id="blank5" onchange="checkBlank(5)">
+                <option value="">-- choose --</option>
+                <option value="pull">pull</option>
+                <option value="Earth">Earth</option>
+                <option value="heavy">heavy</option>
+                <option value="light">light</option>
+                <option value="makes">makes</option>
+            </select> 
+            everything stay on the ground!
+        </div>
+        <div class="feedback-msg" id="readingFeedback"></div>
+    </div>
+
+    <!-- SCORE & RESET -->
+    <button class="action-btn" onclick="calculateFinalScore()">🏆 Check My Final Score</button>
+    <button class="action-btn secondary" onclick="location.reload()">🔄 Reset Lesson</button>
+
+    <div class="score-board" id="finalScoreBoard">
+        <h2 id="scoreTitle">Great Job!</h2>
+        <p id="scoreText"></p>
+    </div>
+</div>
+
+<script>
+    // --- JAVASCRIPT LOGIC ---
+
+    // Global Score Tracker
+    let totalScore = 0;
+    let totalPossible = 0;
+
+    // ==========================================
+    // ACTIVITY 1: STATES OF MATTER
+    // ==========================================
+    const matterData = [
+        { emoji: "🧊", name: "Ice", answer: "Solid" },
+        { emoji: "🥛", name: "Milk", answer: "Liquid" },
+        { emoji: "💨", name: "Steam", answer: "Gas" },
+        { emoji: "🪨", name: "Rock", answer: "Solid" },
+        { emoji: "🍵", name: "Hot Tea", answer: "Liquid" },
+        { emoji: "🎈", name: "Helium", answer: "Gas" }
+    ];
+
+    function initMatterActivity() {
+        const grid = document.getElementById('matterGrid');
+        matterData.forEach((item, index) => {
+            totalPossible++;
+            const div = document.createElement('div');
+            div.className = 'matter-item';
+            div.id = `matter-${index}`;
+            div.innerHTML = `
+                <span class="emoji">${item.emoji}</span>
+                <strong>${item.name}</strong>
+                <div class="matter-buttons">
+                    <button class="matter-btn" onclick="checkMatter(${index}, 'Solid', this)">Solid</button>
+                    <button class="matter-btn" onclick="checkMatter(${index}, 'Liquid', this)">Liquid</button>
+                    <button class="matter-btn" onclick="checkMatter(${index}, 'Gas', this)">Gas</button>
+                </div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function checkMatter(index, selected, btn) {
+        const item = matterData[index];
+        const container = document.getElementById(`matter-${index}`);
+        const buttons = container.querySelectorAll('.matter-btn');
+        
+        // Prevent multiple answers
+        if (container.dataset.answered) return;
+        container.dataset.answered = "true";
+
+        buttons.forEach(b => b.disabled = true);
+
+        if (selected === item.answer) {
+            btn.classList.add('correct');
+            totalScore++;
+        } else {
+            btn.classList.add('incorrect');
+            // Highlight correct answer
+            buttons.forEach(b => {
+                if (b.innerText === item.answer) b.classList.add('correct');
+            });
+        }
+    }
+
+    // ==========================================
+    // ACTIVITY 2: FORCES
+    // ==========================================
+    const forcesData = [
+        { q: "1. You kick a football with your foot.", options: ["Push", "Pull", "Gravity", "Friction"], answer: "Push" },
+        { q: "2. You open a desk drawer to get a pen.", options: ["Push", "Pull", "Gravity", "Friction"], answer: "Pull" },
+        { q: "3. An apple falls from a tree to the ground.", options: ["Push", "Pull", "Gravity", "Friction"], answer: "Gravity" },
+        { q: "4. A bicycle stops when you use the brakes.", options: ["Push", "Pull", "Gravity", "Friction"], answer: "Friction" }
+    ];
+
+    function initForcesActivity() {
+        const container = document.getElementById('forcesContainer');
+        forcesData.forEach((item, index) => {
+            totalPossible++;
+            const div = document.createElement('div');
+            div.className = 'force-question';
+            div.id = `force-${index}`;
+            
+            let optionsHTML = '<div class="options">';
+            item.options.forEach(opt => {
+                optionsHTML += `<button class="option-btn" onclick="checkForce(${index}, '${opt}', this)">${opt}</button>`;
+            });
+            optionsHTML += '</div>';
+
+            div.innerHTML = `<p>${item.q}</p>${optionsHTML}`;
+            container.appendChild(div);
+        });
+    }
+
+    function checkForce(index, selected, btn) {
+        const item = forcesData[index];
+        const container = document.getElementById(`force-${index}`);
+        const buttons = container.querySelectorAll('.option-btn');
+
+        if (container.dataset.answered) return;
+        container.dataset.answered = "true";
+
+        buttons.forEach(b => b.disabled = true);
+
+        if (selected === item.answer) {
+            btn.classList.add('selected-correct');
+            totalScore++;
+        } else {
+            btn.classList.add('selected-incorrect');
+            buttons.forEach(b => {
+                if (b.innerText === item.answer) b.classList.add('show-correct');
+            });
+        }
+    }
+
+    // ==========================================
+    // ACTIVITY 3: READING BLANKS
+    // ==========================================
+    const readingAnswers = {
+        1: "pull",
+        2: "Earth",
+        3: "heavy",
+        4: "light",
+        5: "makes"
+    };
+    totalPossible += 5; // 5 blanks
+
+    function checkBlank(blankNum) {
+        const select = document.getElementById(`blank${blankNum}`);
+        const selectedVal = select.value;
+        
+        // Remove previous classes
+        select.classList.remove('correct', 'incorrect');
+
+        if (selectedVal === "") return;
+
+        if (selectedVal === readingAnswers[blankNum]) {
+            select.classList.add('correct');
+            // Only add score if it wasn't previously answered correctly
+            if (!select.dataset.correct) {
+                totalScore++;
+                select.dataset.correct = "true";
+            }
+        } else {
+            select.classList.add('incorrect');
+            select.dataset.correct = "false";
+        }
+    }
+
+    // ==========================================
+    // FINAL SCORE
+    // ==========================================
+    function calculateFinalScore() {
+        const board = document.getElementById('finalScoreBoard');
+        const title = document.getElementById('scoreTitle');
+        const text = document.getElementById('scoreText');
+        
+        board.style.display = 'block';
+        board.scrollIntoView({ behavior: 'smooth' });
+
+        const percentage = Math.round((totalScore / totalPossible) * 100);
+        
+        text.innerText = `You scored ${totalScore} out of ${totalPossible} points! (${percentage}%)`;
+
+        if (percentage === 100) {
+            title.innerText = "🌟 Perfect Score! You are a Physics Genius!";
+        } else if (percentage >= 70) {
+            title.innerText = "🎉 Great Job! You understand the concepts well!";
+        } else if (percentage >= 40) {
+            title.innerText = "👍 Good Effort! Keep practicing your English and Physics!";
+        } else {
+            title.innerText = "📚 Keep Trying! Review the vocabulary and try again.";
+        }
+    }
+
+    // Initialize Activities on Load
+    window.onload = function() {
+        initMatterActivity();
+        initForcesActivity();
+    };
+</script>
+
+</body>
+</html>
